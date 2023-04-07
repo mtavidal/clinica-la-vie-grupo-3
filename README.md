@@ -11,7 +11,7 @@ Para ajudar nos atendimentos, eles precisam de uma API que permita criar registr
 -   Renomei o arquivo na raiz do projeto `.env.example` para `.env`;
 -   Preenchas informações do arquivo `.env`;
 -   Rode o comando no terminal
-    npm start
+<pre><code>npm start</code></pre>
 
 ---
 
@@ -25,8 +25,6 @@ Para ajudar nos atendimentos, eles precisam de uma API que permita criar registr
 ---
 
 ## 💾 Banco de dados
-
-Para o processo de criação do banco de dados, utilizamos migrations, porém desenhamos antes os models
 
 ![DER do banco de dados](https://raw.githubusercontent.com/rodrigobruno/clinica-la-vie/main/banco-de-dados/clinica-la-vie-der.png 'DER do banco de dados')
 
