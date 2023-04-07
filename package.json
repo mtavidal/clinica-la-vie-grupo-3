@@ -1,0 +1,34 @@
+{
+  "name": "clinica-la-vie",
+  "version": "1.0.0",
+  "description": "API com Node.js e Express para clínica La Vie - Saúde Mental que oferece diversos tipos de terapia.",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigobruno/clinica-la-vie.git"
+  },
+  "keywords": [
+    "api",
+    "express",
+    "dotenv",
+    "mysql2",
+    "sequelize"
+  ],
+  "author": "Francisco Oliveira, Manuela Torres, Marjorie Caroline Tristão Ferreira, Rodrigo Augusto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rodrigobruno/clinica-la-vie/issues"
+  },
+  "homepage": "https://github.com/rodrigobruno/clinica-la-vie#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.2.0",
+    "sequelize": "^6.30.0"
+  }
+}
