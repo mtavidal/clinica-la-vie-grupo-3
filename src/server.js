@@ -9,7 +9,7 @@ app.use(express.json());
 routes(app);
 
 try {
-    await db.sync({ force: true }); // { force: true }
+    await db.sync(); // { force: true }
     console.log('A conexão com banco de dados bem sucessidade.');
 
     app.listen(port, () => {
