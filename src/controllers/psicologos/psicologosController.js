@@ -1,77 +1,138 @@
-import psicologo from '../../models/psicologos/psicologosModel.js';
+import { default as PsicologoRepository } from '../../models/psicologos/psicologosModel.js';
+import { UniqueConstraintError } from 'sequelize';
+import bcrypt from 'bcrypt';
 
-export default class PsicologosController {
+export class PsicologosController {
     static async findAllPsicologos(request, response) {
         try {
-            const allPsicologos = await psicologo.findAll({
-                attributes: {
-                    exclude: ['senha'],
-                },
-            });
+            const allPsicologos = await PsicologoRepository.findAll();
             return response.status(200).json(allPsicologos);
         } catch (error) {
             return response.status(500).json(error.message);
         }
     }
 
-    // static async findAuthor(req, res) {
-    //     const { id } = req.params;
+    static async findPsicologo(request, response) {
+        const { id } = request.params;
 
-    //     try {
-    //         const author = await dbAuthors.findOne({
-    //             where: { id: Number(id) },
-    //             attributes: {
-    //                 exclude: ['senha'],
-    //             },
-    //         });
-    //         return res.status(200).json(author);
-    //     } catch (error) {
-    //         return res.status(500).json(error.message);
-    //     }
-    // }
+        try {
+            const onePsicologo = await PsicologoRepository.findByPk(Number(id));
 
-    // static async addAuthors(req, res) {
-    //     try {
-    //         const createAuthor = await dbAuthors.create({
-    //             nome: req.body.nome,
-    //             bio: req.body.bio,
-    //             indenpendente: req.body.indenpendente,
-    //             email: req.body.email,
-    //             senha: req.body.senha,
-    //         });
-    //         return res.status(200).json(createAuthor);
-    //     } catch (error) {
-    //         return res.status(500).json(error.message);
-    //     }
-    // }
+            if (!onePsicologo)
+                return response.status(404).json({
+                    message: `Psicólogo com id: ${id} não encontrado`,
+                });
 
-    // static async updateAuthor(req, res) {
-    //     const { id } = req.params;
-    //     const newInfos = req.body;
+            return response.status(200).json(onePsicologo);
+        } catch (error) {
+            return response.status(500).json(error.message);
+        }
+    }
 
-    //     try {
-    //         await dbAuthors.update(newInfos, {
-    //             where: { id: Number(id) },
-    //         });
-    //         const authorUpdated = await dbAuthors.findByPk(id);
-    //         return res.status(200).json(authorUpdated);
-    //     } catch (error) {
-    //         return res.status(500).json(error.message);
-    //     }
-    // }
+    static async addPsicologo(request, response) {
+        try {
+            const createPsicologo = await PsicologoRepository.create({
+                nome: request.body.nome,
+                email: request.body.email,
+                //senha: request.body.senha,
+                senha:
+                    request.body.senha === undefined
+                        ? ''
+                        : bcrypt.hashSync(request.body.senha, 8),
+                apresentacao: request.body.apresentacao,
+            });
 
-    // static async deleteAuthor(req, res) {
-    //     const { id } = req.params;
+            return response.status(201).json(createPsicologo);
+        } catch (error) {
+            if (error instanceof UniqueConstraintError) {
+                return response.status(400).json({
+                    message: error.errors.map((e) => e.message),
+                });
+            }
 
-    //     try {
-    //         await dbAuthors.destroy({
-    //             where: { id: Number(id) },
-    //         });
-    //         return res.status(200).json({
-    //             mensagem: `Autor com id: ${id} excluída com sucesso.`,
-    //         });
-    //     } catch (error) {
-    //         return res.status(500).json(error.message);
-    //     }
-    // }
+            if (error.name === 'SequelizeValidationError') {
+                return response.status(400).json({
+                    message: error.errors.map((e) => e.message),
+                });
+            }
+
+            return response.status(500).json(error.message);
+        }
+    }
+
+    static async updatePsicologo(request, response) {
+        const { id } = request.params;
+
+        try {
+            await PsicologoRepository.update(
+                {
+                    nome: request.body.nome,
+                    email: request.body.email,
+                    //senha: request.body.senha,
+                    senha:
+                        request.body.senha === undefined
+                            ? ''
+                            : bcrypt.hashSync(request.body.senha, 8),
+                    apresentacao: request.body.apresentacao,
+                },
+                {
+                    where: { id: Number(id) },
+                }
+            );
+
+            if (
+                !request.body.nome ||
+                !request.body.email ||
+                !request.body.apresentacao
+            )
+                return response.status(400).json({
+                    message: `É necessario preenhecer nome, e-mail e apresentação`,
+                });
+
+            const psicologoUpdated = await PsicologoRepository.findByPk(
+                Number(id),
+                {
+                    attributes: {
+                        exclude: ['senha'],
+                    },
+                }
+            );
+
+            return response.status(200).json(psicologoUpdated);
+        } catch (error) {
+            if (error instanceof UniqueConstraintError) {
+                return response.status(400).json({
+                    message: error.errors.map((e) => e.message),
+                });
+            }
+
+            if (error.name === 'SequelizeValidationError') {
+                return response.status(400).json({
+                    message: error.errors.map((e) => e.message),
+                });
+            }
+            return response.status(500).json(error.message);
+        }
+    }
+
+    static async deletePsicologo(request, response) {
+        const { id } = request.params;
+
+        try {
+            const isDeletePsicologo = await PsicologoRepository.destroy({
+                where: { id: Number(id) },
+            });
+
+            if (!isDeletePsicologo)
+                return response.status(404).json({
+                    message: `Psicólogo com id: ${id} não encontrado`,
+                });
+
+            return response.status(200).json({
+                message: `Psicólogo com id: ${id} excluída com sucesso.`,
+            });
+        } catch (error) {
+            return response.status(500).json(error.message);
+        }
+    }
 }

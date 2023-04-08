@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import db from '../../db/db.js';
+import bcrypt from 'bcrypt';
 
 const psicologo = db.define(
     'psicologo',
@@ -14,9 +15,13 @@ const psicologo = db.define(
             type: Sequelize.STRING(60),
             allowNull: false,
             validate: {
+                notNull: {
+                    args: true,
+                    msg: 'O preenchimento do nome é obrigatório',
+                },
                 notEmpty: {
                     args: true,
-                    msg: 'Obrigatório',
+                    msg: 'O preenchimento do nome é obrigatório',
                 },
                 len: {
                     args: [3, 60],
@@ -28,10 +33,19 @@ const psicologo = db.define(
             type: Sequelize.STRING(100),
             allowNull: false,
             unique: true,
+            unique: {
+                args: true,
+                name: 'email',
+                msg: 'O e-mail já está cadastrado',
+            },
             validate: {
+                notNull: {
+                    args: true,
+                    msg: 'O preenchimento do e-mail é obrigatório',
+                },
                 notEmpty: {
                     args: true,
-                    msg: 'Obrigatório',
+                    msg: 'O preenchimento do e-mail é obrigatório',
                 },
                 isEmail: {
                     args: true,
@@ -40,24 +54,42 @@ const psicologo = db.define(
             },
         },
         senha: {
-            type: Sequelize.CHAR(64),
+            type: Sequelize.CHAR(60),
             allowNull: false,
             validate: {
-                is: /^[0-9a-f]{64}$/i,
+                notNull: {
+                    args: true,
+                    msg: 'O preenchimento do senha é obrigatório',
+                },
+                notEmpty: {
+                    args: true,
+                    msg: 'O preenchimento da senha é obrigatório',
+                },
             },
         },
         apresentacao: {
             type: Sequelize.TEXT,
             allowNull: false,
             validate: {
+                notNull: {
+                    args: true,
+                    msg: 'O preenchimento da apresentação é obrigatório',
+                },
                 notEmpty: {
                     args: true,
-                    msg: 'Obrigatório',
+                    msg: 'O preenchimento da apresentação é obrigatório',
                 },
                 min: {
                     args: [20],
                     msg: 'A apresentação deve ter mais de 20 caracteres',
                 },
+            },
+        },
+    },
+    {
+        defaultScope: {
+            attributes: {
+                exclude: ['senha'],
             },
         },
     },
