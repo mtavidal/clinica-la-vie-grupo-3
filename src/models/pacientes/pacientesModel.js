@@ -2,7 +2,7 @@ import { Sequelize } from 'sequelize';
 import db from '../../db/db.js';
 
 const paciente = db.define(
-    'paciente',
+    "paciente",
     {
         id: {
             type: Sequelize.INTEGER.UNSIGNED,
