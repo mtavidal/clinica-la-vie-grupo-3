@@ -9,8 +9,8 @@ app.use(express.json());
 routes(app);
 
 try {
-    await db.sync(); // { force: true }
-    console.log('A conexão com banco de dados bem sucessidade.');
+    await db.sync({ alter: true }); 
+    console.log('A conexão com banco de dados bem sucedida.');
 
     app.listen(port, () => {
         console.log(`Servidor iniciado na porta ${port}`);
