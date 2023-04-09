@@ -16,7 +16,11 @@ const paciente = db.define(
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: 'Obrigatório',
+                    msg: 'O campo nome é obrigatório.',
+                },
+                notNull: {
+                    args: true,
+                    msg: 'O campo nome é obrigatório.',
                 },
                 len: {
                     args: [3, 60],
@@ -31,7 +35,11 @@ const paciente = db.define(
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: 'Obrigatório',
+                    msg: 'O campo email é obrigatório.',
+                },
+                notNull: {
+                    args: true,
+                    msg: 'O campo email é obrigatório.',
                 },
                 isEmail: {
                     args: true,
@@ -45,7 +53,11 @@ const paciente = db.define(
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: 'Obrigatório',
+                    msg: 'O campo idade é obrigatório.',
+                },
+                notNull: {
+                    args: true,
+                    msg: 'O campo idade é obrigatório.',
                 },
                 isDate: {
                     args: true,

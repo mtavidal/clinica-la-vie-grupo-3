@@ -1,4 +1,5 @@
 import paciente from '../../models/pacientes/pacientesModel.js';
+import { ValidationError } from 'sequelize';
 
 export default class PacientesController {
     static async findAllPacientes(request, response) {
@@ -23,7 +24,7 @@ export default class PacientesController {
     }
 
     static async findPaciente(request, response) {
-        const {id} = request.params;
+        const { id } = request.params;
         try {
             const pacienteBuscado = await paciente.findByPk(id,
                 // {
@@ -33,9 +34,15 @@ export default class PacientesController {
                 //     },
                 // }
             );
-            response
-                .status(200)
-                .json({ message: "Operação bem sucedida!", data: pacienteBuscado });
+            if (pacienteBuscado === null) {
+                response
+                    .status(404)
+                    .json({ message: `Paciente com ID - ${id} não encontrado ` });
+            } else {
+                response
+                    .status(200)
+                    .json({ message: "Operação bem sucedida!", data: pacienteBuscado });
+            }
         } catch (error) {
             console.log(`Erro ao recuperar o registro de paciente com id ${id}: `, error);
             response
@@ -63,55 +70,93 @@ export default class PacientesController {
                 .status(201)
                 .json({ message: "Operação bem sucedida!", data: pacienteCreated });
         } catch (error) {
-            console.log("Erro ao criar paciente: ", error);
-            response
-                .status(500)
-                .json({ message: "Falha na operação", data: {} });
+            if (error instanceof ValidationError) {
+                console.log("Erro de validação ao criar o registro do paciente: ", error);
+                response
+                    .status(400)
+                    .json({
+                        message: "Erro na requisição", error: error.errors.map(function (e) {
+                            return e.message;
+                        })
+                    });
+            } else {
+                console.log("Erro ao criar paciente: ", error);
+                response
+                    .status(500)
+                    .json({ message: "Falha na operação", data: {} });
+            }
         }
     }
 
     static async uptadePaciente(request, response) {
-        const {id} = request.params;
+        const { id } = request.params;
+        const bodyUpdate = {
+            nome: request.body.nome === undefined ? null : request.body.nome,
+            email: request.body.email === undefined ? null : request.body.email,
+            idade: request.body.idade === undefined ? null : request.body.idade
+        };
         try {
-            await paciente.update({
-                nome: request.body.nome,
-                email: request.body.email,
-                idade: request.body.idade,
-            },
+            const updateOk = await paciente.update(bodyUpdate,
                 {
                     where: {
                         id: id,
-                    },
+                    }
                 });
-            const pacienteUpdated = await paciente.findByPk(id,
-                // {
-                //     include: "news",
-                //     attributes: {
-                //         exclude: ["password"],
-                //     },
-                // }
+                console.log("aqui " + updateOk)
+            if (updateOk == 1) {
+                const pacienteUpdated = await paciente.findByPk(id,
+                    // {
+                    //     include: "news",
+                    //     attributes: {
+                    //         exclude: ["password"],
+                    //     },
+                    // }
                 );
-            response
-                .status(200)
-                .json({ message: "Operação bem sucedida!", data: pacienteUpdated });
+                response
+                    .status(200)
+                    .json({ message: "Operação bem sucedida!", data: pacienteUpdated });
+            } else {
+                response
+                    .status(404)
+                    .json({ message: `Paciente com ID - ${id} não encontrado ` });
+            }
+
         } catch (error) {
-            console.log(`Erro ao atualizar o paciente com id ${id}: `, error);
-            response
-                .status(500)
-                .json({ message: "Falha na operação", data: {} });
+            if (error instanceof ValidationError) {
+                console.log("Erro de validação ao atualizar o paciente: ", error);
+                response
+                    .status(400)
+                    .json({
+                        message: "Erro na requisição", error: error.errors.map(function (e) {
+                            return e.message;
+                        })
+                    });
+            } else {
+                console.log(`Erro ao atualizar o registro do paciente com id ${id}: `, error);
+                response
+                    .status(500)
+                    .json({ message: "Falha na operação", data: {} });
+            }
         }
     }
 
     static async deletePaciente(request, response) {
-        const {id} = request.params;
+        const { id } = request.params;
         try {
-            await paciente.destroy({
+            const deleteOk = await paciente.destroy({
                 where: {
                     id: id,
                 },
             });
-            response
-                .status(204);
+            if (deleteOk == 1) {
+                response
+                    .status(204)
+                    .send();
+            } else {
+                response
+                    .status(404)
+                    .json({ message: `Paciente com ID - ${id} não encontrado ` });
+            }
         } catch (error) {
             console.log(`Erro ao tentar excluir o registro de paciente com id ${id}: `, error);
             response
