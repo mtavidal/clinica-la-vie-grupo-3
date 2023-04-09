@@ -53,11 +53,12 @@ export default class PacientesController {
 
     static async addPaciente(request, response) {
         try {
+            const arrayIdade = request.body.idade.split("/");
             const pacienteCreated = await paciente.create(
                 {
                     nome: request.body.nome,
                     email: request.body.email,
-                    idade: request.body.idade
+                    idade: new Date(arrayIdade[2], arrayIdade[1] -1 ,arrayIdade[0])
                 }
                 // {
                 //     include: "news",
@@ -90,12 +91,13 @@ export default class PacientesController {
 
     static async uptadePaciente(request, response) {
         const { id } = request.params;
-        const bodyUpdate = {
-            nome: request.body.nome === undefined ? null : request.body.nome,
-            email: request.body.email === undefined ? null : request.body.email,
-            idade: request.body.idade === undefined ? null : request.body.idade
-        };
         try {
+            const arrayIdade = request.body.idade.split("/");
+            const bodyUpdate = {
+                nome: request.body.nome === undefined ? null : request.body.nome,
+                email: request.body.email === undefined ? null : request.body.email,
+                idade: request.body.idade === undefined ? null : new Date(arrayIdade[2], arrayIdade[1] -1 ,arrayIdade[0])
+            };
             const updateOk = await paciente.update(bodyUpdate,
                 {
                     where: {

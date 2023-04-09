@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import db from '../../db/db.js';
+import moment from 'moment';
 
 const paciente = db.define(
     "paciente",
@@ -61,9 +62,12 @@ const paciente = db.define(
                 },
                 isDate: {
                     args: true,
-                    msg: 'Dados do tipo data inválidos. Ex.: 2004-04-31',
+                    msg: 'Dados do tipo data inválidos. Ex.: 31/08/1995',
                 },
             },
+            get: function() {
+                return moment(this.getDataValue('idade')).format('DD/MM/YYYY');
+             },
         },
     },
     {
