@@ -5,7 +5,11 @@ import bcrypt from 'bcrypt';
 export class PsicologosController {
     static async findAllPsicologos(request, response) {
         try {
-            const allPsicologos = await PsicologoRepository.findAll();
+            const allPsicologos = await PsicologoRepository.findAll({
+                attributes: {
+                    exclude: ['senha'],
+                },
+            });
             return response.status(200).json(allPsicologos);
         } catch (error) {
             return response.status(500).json(error.message);
@@ -16,7 +20,14 @@ export class PsicologosController {
         const { id } = request.params;
 
         try {
-            const onePsicologo = await PsicologoRepository.findByPk(Number(id));
+            const onePsicologo = await PsicologoRepository.findByPk(
+                Number(id),
+                {
+                    attributes: {
+                        exclude: ['senha'],
+                    },
+                }
+            );
 
             if (!onePsicologo)
                 return response.status(404).json({
@@ -30,17 +41,22 @@ export class PsicologosController {
     }
 
     static async addPsicologo(request, response) {
+        const { nome, email, senha, apresentacao } = request.body;
+
         try {
-            const createPsicologo = await PsicologoRepository.create({
-                nome: request.body.nome,
-                email: request.body.email,
-                //senha: request.body.senha,
-                senha:
-                    request.body.senha === undefined
-                        ? ''
-                        : bcrypt.hashSync(request.body.senha, 8),
-                apresentacao: request.body.apresentacao,
-            });
+            const createPsicologo = await PsicologoRepository.create(
+                {
+                    nome: nome,
+                    email: email,
+                    senha: senha === undefined ? '' : bcrypt.hashSync(senha, 8),
+                    apresentacao: apresentacao,
+                },
+                {
+                    attributes: {
+                        exclude: ['senha'],
+                    },
+                }
+            );
 
             return response.status(201).json(createPsicologo);
         } catch (error) {
@@ -48,6 +64,10 @@ export class PsicologosController {
                 return response.status(400).json({
                     message: error.errors.map((e) => e.message),
                 });
+            }
+
+            if (error.name === 'UnauthorizedError') {
+                console.log('a');
             }
 
             if (error.name === 'SequelizeValidationError') {
@@ -62,29 +82,22 @@ export class PsicologosController {
 
     static async updatePsicologo(request, response) {
         const { id } = request.params;
+        const { nome, email, senha, apresentacao } = request.body;
 
         try {
             await PsicologoRepository.update(
                 {
-                    nome: request.body.nome,
-                    email: request.body.email,
-                    //senha: request.body.senha,
-                    senha:
-                        request.body.senha === undefined
-                            ? ''
-                            : bcrypt.hashSync(request.body.senha, 8),
-                    apresentacao: request.body.apresentacao,
+                    nome: nome,
+                    email: email,
+                    senha: senha === undefined ? '' : bcrypt.hashSync(senha, 8),
+                    apresentacao: apresentacao,
                 },
                 {
                     where: { id: Number(id) },
                 }
             );
 
-            if (
-                !request.body.nome ||
-                !request.body.email ||
-                !request.body.apresentacao
-            )
+            if (!nome || !email || !apresentacao)
                 return response.status(400).json({
                     message: `É necessario preenhecer nome, e-mail e apresentação`,
                 });
@@ -111,6 +124,7 @@ export class PsicologosController {
                     message: error.errors.map((e) => e.message),
                 });
             }
+
             return response.status(500).json(error.message);
         }
     }

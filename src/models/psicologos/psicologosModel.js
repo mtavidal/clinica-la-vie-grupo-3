@@ -54,7 +54,7 @@ const psicologo = db.define(
             },
         },
         senha: {
-            type: Sequelize.CHAR(60),
+            type: Sequelize.STRING(100),
             allowNull: false,
             validate: {
                 notNull: {
@@ -64,6 +64,10 @@ const psicologo = db.define(
                 notEmpty: {
                     args: true,
                     msg: 'O preenchimento da senha é obrigatório',
+                },
+                min: {
+                    args: [6],
+                    msg: 'A senha deve ter mais de 6 caracteres',
                 },
             },
         },
@@ -86,13 +90,13 @@ const psicologo = db.define(
             },
         },
     },
-    {
-        defaultScope: {
-            attributes: {
-                exclude: ['senha'],
-            },
-        },
-    },
+    // {
+    //     defaultScope: {
+    //         attributes: {
+    //             exclude: ['senha'],
+    //         },
+    //     },
+    // },
     {
         tableName: 'psicologos',
     }
