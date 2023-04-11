@@ -1,4 +1,4 @@
-import { default as PsicologoRepository } from '../../models/psicologos/psicologosModel.js';
+import { Psicologos as PsicologoRepository } from '../../models/index.js';
 import { UniqueConstraintError } from 'sequelize';
 import bcrypt from 'bcrypt';
 

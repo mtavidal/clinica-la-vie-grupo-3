@@ -56,13 +56,13 @@ const atendimento = db.define(
     }
 );
 
-atendimento.associate = function (models) {
-    atendimento.belongsTo(models.psicologo, {
-        foreignKey: 'psicologo_id',
-    });
-    atendimento.belongsTo(models.paciente, {
-        foreignKey: 'paciente_id',
-    });
-};
+// atendimento.associate = function (models) {
+//     atendimento.belongsTo(models.psicologo, {
+//         foreignKey: 'psicologo_id',
+//     });
+//     atendimento.belongsTo(models.paciente, {
+//         foreignKey: 'paciente_id',
+//     });
+// };
 
 export default atendimento;

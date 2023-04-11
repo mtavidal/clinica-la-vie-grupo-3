@@ -3,7 +3,7 @@ import db from '../../db/db.js';
 import moment from 'moment';
 
 const paciente = db.define(
-    "paciente",
+    'paciente',
     {
         id: {
             type: Sequelize.INTEGER.UNSIGNED,
@@ -65,9 +65,9 @@ const paciente = db.define(
                     msg: 'Dados do tipo data inválidos. Ex.: 31/08/1995',
                 },
             },
-            get: function() {
+            get: function () {
                 return moment(this.getDataValue('idade')).format('DD/MM/YYYY');
-             },
+            },
         },
     },
     {
@@ -75,10 +75,10 @@ const paciente = db.define(
     }
 );
 
-paciente.associate = function (models) {
-    paciente.hasMany(models.atendimento, {
-        foreignKey: 'paciente_id',
-    });
-};
+// paciente.associate = function (models) {
+//     paciente.hasMany(models.atendimento, {
+//         foreignKey: 'paciente_id',
+//     });
+// };
 
 export default paciente;
