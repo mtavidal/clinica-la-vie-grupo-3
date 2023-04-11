@@ -44,19 +44,12 @@ export class PsicologosController {
         const { nome, email, senha, apresentacao } = request.body;
 
         try {
-            const createPsicologo = await PsicologoRepository.create(
-                {
-                    nome: nome,
-                    email: email,
-                    senha: senha === undefined ? '' : bcrypt.hashSync(senha, 8),
-                    apresentacao: apresentacao,
-                },
-                {
-                    attributes: {
-                        exclude: ['senha'],
-                    },
-                }
-            );
+            const createPsicologo = await PsicologoRepository.create({
+                nome: nome,
+                email: email,
+                senha: senha === undefined ? '' : bcrypt.hashSync(senha, 8),
+                apresentacao: apresentacao,
+            });
 
             return response.status(201).json(createPsicologo);
         } catch (error) {

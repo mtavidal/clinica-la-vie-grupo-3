@@ -90,13 +90,16 @@ const psicologo = db.define(
             },
         },
     },
-    // {
-    //     defaultScope: {
-    //         attributes: {
-    //             exclude: ['senha'],
-    //         },
-    //     },
-    // },
+    {
+        hooks: {
+            afterCreate: (record) => {
+                delete record.dataValues.senha;
+            },
+            afterUpdate: (record) => {
+                delete record.dataValues.senha;
+            },
+        },
+    },
     {
         tableName: 'psicologos',
     }
