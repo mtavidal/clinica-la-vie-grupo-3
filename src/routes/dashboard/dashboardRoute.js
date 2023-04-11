@@ -1,13 +1,17 @@
-import { Router } from 'express';
+import express from 'express';
 import DashboardController from '../../controllers/dashboard/dashboardController.js';
 
+const routes = express.Router();
 
+routes.get('/numero-paciente', DashboardController.findTotalPacientes);
+routes.get('/numero-de-psicologos', DashboardController.findTotalPsicologos);
+routes.get(
+    '/numero-de-atendimentos',
+    DashboardController.findTotalAtendimentos
+);
+routes.get(
+    '/media-de-atendimentos-por-psicologos',
+    DashboardController.findMediaAtendimento
+);
 
-const router = Router();
-
-router.get('/dashboard/numero-paciente', DashboardController.findTotalPacientes);
-router.get('/dashboard/numero-de-psicologos', DashboardController.findTotalPsicologos);
-router.get('/dashboard/numero-de-atendimentos', DashboardController.findTotalAtendimentos);
-router.get('/dashboard/media-de-atendimentos-por-psicologos', DashboardController.findMediaAtendimento);
-
-export default router;
+export default routes;

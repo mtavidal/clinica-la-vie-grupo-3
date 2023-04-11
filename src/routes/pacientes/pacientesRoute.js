@@ -1,12 +1,12 @@
-import { Router } from 'express';
+import express from 'express';
 import PacientesController from '../../controllers/pacientes/pacientesController.js';
 
-const router = Router();
+const routes = express.Router();
 
-router.get('/pacientes', PacientesController.findAllPacientes);
-router.get('/pacientes/:id', PacientesController.findPaciente);
-router.post('/pacientes', PacientesController.addPaciente);
-router.put('/pacientes/:id', PacientesController.uptadePaciente);
-router.delete('/pacientes/:id', PacientesController.deletePaciente);
+routes.get('/', PacientesController.findAllPacientes);
+routes.get('/:id', PacientesController.findPaciente);
+routes.post('/', PacientesController.addPaciente);
+routes.put('/:id', PacientesController.uptadePaciente);
+routes.delete('/:id', PacientesController.deletePaciente);
 
-export default router;
+export default routes;

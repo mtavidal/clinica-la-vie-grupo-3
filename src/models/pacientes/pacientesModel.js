@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import db from '../../db/db.js';
+import db from '../../config/database.js';
 import moment from 'moment';
 
 const paciente = db.define(

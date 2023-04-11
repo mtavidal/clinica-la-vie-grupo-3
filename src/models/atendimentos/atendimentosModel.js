@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import db from '../../db/db.js';
+import db from '../../config/database.js';
 import Psicologos from '../psicologos/psicologosModel.js';
 import Pacientes from '../pacientes/pacientesModel.js';
 

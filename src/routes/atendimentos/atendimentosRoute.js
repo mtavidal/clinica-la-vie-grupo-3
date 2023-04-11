@@ -1,13 +1,9 @@
-import { Router } from 'express';
-import { AtendimentosController } from '../../controllers/atendimentos/atendimentosController.js';
+import express from 'express';
+import AtendimentosController from '../../controllers/atendimentos/atendimentosController.js';
 import verifyToken from '../../middlewares/auth/verifyToken.js';
 
-const router = Router();
+const routes = express.Router();
 
-router.get('/atendimentos', AtendimentosController.findAllAtendimentos);
-// .get('/atendimentos/:id', PsicologosController.findPsicologo)
-// .post('/atendimentos', PsicologosController.addPsicologo)
-// .put('/atendimentos/:id', PsicologosController.updatePsicologo)
-// .delete('/atendimentos/:id', PsicologosController.deletePsicologo);
+routes.get('/', AtendimentosController.findAllAtendimentos);
 
-export default router;
+export default routes;

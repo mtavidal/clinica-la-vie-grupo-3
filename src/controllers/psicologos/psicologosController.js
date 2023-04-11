@@ -2,7 +2,7 @@ import { Psicologos as PsicologoRepository } from '../../models/index.js';
 import { UniqueConstraintError } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-export class PsicologosController {
+export default class PsicologosController {
     static async findAllPsicologos(request, response) {
         try {
             const allPsicologos = await PsicologoRepository.findAll({

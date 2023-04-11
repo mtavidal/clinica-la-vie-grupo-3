@@ -4,7 +4,7 @@ import {
     Atendimentos as AtendimentoRepository,
 } from '../../models/index.js';
 
-export class AtendimentosController {
+export default class AtendimentosController {
     static async findAllAtendimentos(request, response) {
         try {
             const allAtendimentos = await AtendimentoRepository.findAll({

@@ -1,11 +1,12 @@
-import { Router } from 'express';
+import express from 'express';
 
-const router = Router();
+const routes = express.Router();
 
-router.get('/health', (request, response) => {
+routes.get('/', (request, response) => {
     response.json({
-        message: 'API em funcionamento',
+        message: 'Operação bem sucedida!',
+        data: 'API em funcionamento',
     });
 });
 
-export default router;
+export default routes;

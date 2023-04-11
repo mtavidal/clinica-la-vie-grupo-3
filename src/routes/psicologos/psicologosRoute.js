@@ -1,14 +1,13 @@
-import { Router } from 'express';
-import { PsicologosController } from '../../controllers/psicologos/psicologosController.js';
+import express from 'express';
+import PsicologosController from '../../controllers/psicologos/psicologosController.js';
 import verifyToken from '../../middlewares/auth/verifyToken.js';
 
-const router = Router();
+const routes = express.Router();
 
-router
-    .get('/psicologos', verifyToken, PsicologosController.findAllPsicologos)
-    .get('/psicologos/:id', PsicologosController.findPsicologo)
-    .post('/psicologos', PsicologosController.addPsicologo)
-    .put('/psicologos/:id', PsicologosController.updatePsicologo)
-    .delete('/psicologos/:id', PsicologosController.deletePsicologo);
+routes.get('/', verifyToken, PsicologosController.findAllPsicologos);
+routes.get('/:id', PsicologosController.findPsicologo);
+routes.post('/', PsicologosController.addPsicologo);
+routes.put('/:id', PsicologosController.updatePsicologo);
+routes.delete('/:id', PsicologosController.deletePsicologo);
 
-export default router;
+export default routes;

@@ -1,15 +1,18 @@
-import health from './health/healthRoute.js';
-import psicologos from './psicologos/psicologosRoute.js';
-import pacientes from './pacientes/pacientesRoute.js';
-import dashboard from './dashboard/dashboardRoute.js';
-import login from './auth/authRoute.js';
-import atendimento from './atendimentos/atendimentosRoute.js';
+import express from 'express';
+import healthRoute from './health/healthRoute.js';
+import loginRoute from './auth/authRoute.js';
+import psicologosRoute from './psicologos/psicologosRoute.js';
+import pacientesRoute from './pacientes/pacientesRoute.js';
+import atendimentoRoute from './atendimentos/atendimentosRoute.js';
+import dashboardRoute from './dashboard/dashboardRoute.js';
 
-export default (app) => {
-    app.use(health);
-    app.use(psicologos);
-    app.use(pacientes);
-    app.use(dashboard);
-    app.use(login);
-    app.use(atendimento);
-};
+const routes = express.Router();
+
+routes.use('/health', healthRoute);
+routes.use('/login', loginRoute);
+routes.use('/psicologos', psicologosRoute);
+routes.use('/pacientes', pacientesRoute);
+routes.use('/atendimentos', atendimentoRoute);
+routes.use('/dashboard', dashboardRoute);
+
+export default routes;

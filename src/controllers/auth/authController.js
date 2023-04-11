@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const jwtsecret = process.env.JWT_SECRET;
 
-export class AuthController {
+export default class AuthController {
     static async login(request, response) {
         try {
             const { email, senha } = request.body;
