@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/server.js",
+    "db": "npx sequelize db:drop && npx sequelize db:create && npx sequelize-cli db:migrate && npx sequelize db:seed:all && node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js"
   },
@@ -36,5 +37,8 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.2.0",
     "sequelize": "^6.30.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.0"
   }
 }

@@ -172,3 +172,4 @@ dist
 
 # Custom
 seeders/*
+src/config/config.json
