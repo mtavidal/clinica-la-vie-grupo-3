@@ -105,10 +105,4 @@ const psicologo = db.define(
     }
 );
 
-// psicologo.associate = function (models) {
-//     psicologo.hasMany(models.atendimento, {
-//         foreignKey: 'psicologo_id',
-//     });
-// };
-
 export default psicologo;

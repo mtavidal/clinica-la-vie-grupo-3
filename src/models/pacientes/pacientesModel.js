@@ -75,10 +75,4 @@ const paciente = db.define(
     }
 );
 
-// paciente.associate = function (models) {
-//     paciente.hasMany(models.atendimento, {
-//         foreignKey: 'paciente_id',
-//     });
-// };
-
 export default paciente;

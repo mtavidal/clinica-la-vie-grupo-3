@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
 import db from '../../db/db.js';
+import Psicologos from '../psicologos/psicologosModel.js';
+import Pacientes from '../pacientes/pacientesModel.js';
 
 const atendimento = db.define(
     'atendimento',
@@ -50,19 +52,26 @@ const atendimento = db.define(
                 },
             },
         },
+        psicologo_id: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            references: {
+                model: Psicologos,
+                key: 'id',
+            },
+            allowNull: false,
+        },
+        paciente_id: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            references: {
+                model: Pacientes,
+                key: 'id',
+            },
+            allowNull: false,
+        },
     },
     {
         tableName: 'atendimentos',
     }
 );
-
-// atendimento.associate = function (models) {
-//     atendimento.belongsTo(models.psicologo, {
-//         foreignKey: 'psicologo_id',
-//     });
-//     atendimento.belongsTo(models.paciente, {
-//         foreignKey: 'paciente_id',
-//     });
-// };
 
 export default atendimento;
