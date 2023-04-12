@@ -1,5 +1,4 @@
 import { Psicologos as PsicologoRepository } from '../../models/index.js';
-import { UniqueConstraintError } from 'sequelize';
 import bcrypt from 'bcrypt';
 
 export default class PsicologosController {
@@ -32,11 +31,6 @@ export default class PsicologosController {
                 }
             );
 
-            if (!onePsicologo)
-                return response.status(404).json({
-                    message: `Psicólogo com id: ${id} não encontrado`,
-                });
-
             return response.status(200).json(onePsicologo);
         } catch (error) {
             console.log(
@@ -56,27 +50,13 @@ export default class PsicologosController {
             const createPsicologo = await PsicologoRepository.create({
                 nome: nome,
                 email: email,
-                senha: senha === undefined ? '' : bcrypt.hashSync(senha, 8),
+                senha: bcrypt.hashSync(senha, 8),
                 apresentacao: apresentacao,
             });
 
             return response.status(201).json(createPsicologo);
         } catch (error) {
             console.log('Erro ao criar paciente: ', error);
-
-            if (error instanceof UniqueConstraintError) {
-                return response.status(400).json({
-                    message: 'Falha na operação',
-                    data: error.errors.map((e) => e.message),
-                });
-            }
-
-            if (error.name === 'SequelizeValidationError') {
-                return response.status(400).json({
-                    message: 'Falha na operação',
-                    data: error.errors.map((e) => e.message),
-                });
-            }
 
             return response
                 .status(500)
@@ -101,11 +81,6 @@ export default class PsicologosController {
                 }
             );
 
-            if (!nome || !email || !apresentacao)
-                return response.status(400).json({
-                    message: `É necessario preenhecer nome, e-mail e apresentação`,
-                });
-
             const psicologoUpdated = await PsicologoRepository.findByPk(
                 Number(id),
                 {
@@ -121,20 +96,6 @@ export default class PsicologosController {
                 `Erro ao atualizar o registro do paciente com id ${id}: `,
                 error
             );
-
-            if (error instanceof UniqueConstraintError) {
-                return response.status(400).json({
-                    message: 'Falha na operação',
-                    data: error.errors.map((e) => e.message),
-                });
-            }
-
-            if (error.name === 'SequelizeValidationError') {
-                return response.status(400).json({
-                    message: 'Falha na operação',
-                    data: error.errors.map((e) => e.message),
-                });
-            }
 
             return response
                 .status(500)

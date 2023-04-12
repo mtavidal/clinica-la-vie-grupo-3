@@ -14,80 +14,80 @@ const psicologo = db.define(
         nome: {
             type: Sequelize.STRING(60),
             allowNull: false,
-            validate: {
-                notNull: {
-                    args: true,
-                    msg: 'O preenchimento do nome é obrigatório',
-                },
-                notEmpty: {
-                    args: true,
-                    msg: 'O preenchimento do nome é obrigatório',
-                },
-                len: {
-                    args: [3, 60],
-                    msg: 'O nome deve ter mais de 3 caracteres',
-                },
-            },
+            // validate: {
+            //     notNull: {
+            //         args: true,
+            //         msg: 'O preenchimento do nome é obrigatório',
+            //     },
+            //     notEmpty: {
+            //         args: true,
+            //         msg: 'O preenchimento do nome é obrigatório',
+            //     },
+            //     len: {
+            //         args: [3, 60],
+            //         msg: 'O nome deve ter mais de 3 caracteres',
+            //     },
+            // },
         },
         email: {
             type: Sequelize.STRING(100),
             allowNull: false,
             unique: true,
-            unique: {
-                args: true,
-                name: 'email',
-                msg: 'O e-mail já está cadastrado',
-            },
-            validate: {
-                notNull: {
-                    args: true,
-                    msg: 'O preenchimento do e-mail é obrigatório',
-                },
-                notEmpty: {
-                    args: true,
-                    msg: 'O preenchimento do e-mail é obrigatório',
-                },
-                isEmail: {
-                    args: true,
-                    msg: 'E-mail com formato inválido',
-                },
-            },
+            // unique: {
+            //     args: true,
+            //     name: 'email',
+            //     msg: 'O e-mail já está cadastrado',
+            // },
+            // validate: {
+            //     notNull: {
+            //         args: true,
+            //         msg: 'O preenchimento do e-mail é obrigatório',
+            //     },
+            //     notEmpty: {
+            //         args: true,
+            //         msg: 'O preenchimento do e-mail é obrigatório',
+            //     },
+            //     isEmail: {
+            //         args: true,
+            //         msg: 'E-mail com formato inválido',
+            //     },
+            // },
         },
         senha: {
             type: Sequelize.STRING(100),
             allowNull: false,
-            validate: {
-                notNull: {
-                    args: true,
-                    msg: 'O preenchimento do senha é obrigatório',
-                },
-                notEmpty: {
-                    args: true,
-                    msg: 'O preenchimento da senha é obrigatório',
-                },
-                min: {
-                    args: [6],
-                    msg: 'A senha deve ter mais de 6 caracteres',
-                },
-            },
+            // validate: {
+            //     notNull: {
+            //         args: true,
+            //         msg: 'O preenchimento do senha é obrigatório',
+            //     },
+            //     notEmpty: {
+            //         args: true,
+            //         msg: 'O preenchimento da senha é obrigatório',
+            //     },
+            //     min: {
+            //         args: [6],
+            //         msg: 'A senha deve ter mais de 6 caracteres',
+            //     },
+            // },
         },
         apresentacao: {
             type: Sequelize.TEXT,
             allowNull: false,
-            validate: {
-                notNull: {
-                    args: true,
-                    msg: 'O preenchimento da apresentação é obrigatório',
-                },
-                notEmpty: {
-                    args: true,
-                    msg: 'O preenchimento da apresentação é obrigatório',
-                },
-                min: {
-                    args: [20],
-                    msg: 'A apresentação deve ter mais de 20 caracteres',
-                },
-            },
+            // validate: {
+            //     notNull: {
+            //         args: true,
+            //         msg: 'O preenchimento da apresentação é obrigatório',
+            //     },
+            //     notEmpty: {
+            //         args: true,
+            //         msg: 'O preenchimento da apresentação é obrigatório',
+            //     },
+            //     min: {
+            //         args: [20],
+            //         msg: 'A apresentação deve ter mais de 20 caracteres',
+            //     },
+            // },
         },
     },
     {

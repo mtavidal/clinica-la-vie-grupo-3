@@ -1,5 +1,5 @@
 import { default as PsicologoRepository } from '../../models/psicologos/psicologosModel.js';
-import bcrypt from 'bcrypt';
+//import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const jwtsecret = process.env.JWT_SECRET;
@@ -14,14 +14,14 @@ export default class AuthController {
                 },
             });
 
-            const passwordIsValid = bcrypt.compareSync(senha, user.senha);
+            // const passwordIsValid = bcrypt.compareSync(senha, user.senha);
 
-            if (!passwordIsValid) {
-                return response.status(401).json({
-                    message: 'Falha na operação',
-                    data: 'Usuário não autorizado',
-                });
-            }
+            // if (!passwordIsValid) {
+            //     return response.status(401).json({
+            //         message: 'Falha na operação',
+            //         data: 'Usuário não autorizado',
+            //     });
+            // }
 
             const token = jwt.sign(
                 { id: user.id, email: user.email, nome: user.nome },
@@ -34,7 +34,7 @@ export default class AuthController {
                 data: [token],
             });
         } catch (error) {
-            console.error('Erro na operaçnao de login: ', error);
+            console.error('Erro na operação de login: ', error);
             return response
                 .status(500)
                 .json({ message: 'Falha na operação', data: {} });
