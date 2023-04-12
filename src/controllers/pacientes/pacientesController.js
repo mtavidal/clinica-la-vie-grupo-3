@@ -4,15 +4,7 @@ import { ValidationError } from 'sequelize';
 export default class PacientesController {
     static async findAllPacientes(request, response) {
         try {
-            const pacientes = await PacienteRepository
-                .findAll
-                //     {
-                //     include: "news",
-                //     attributes: {
-                //         exclude: ["password"],
-                //     },
-                // }
-                ();
+            const pacientes = await PacienteRepository.findAll();
             response
                 .status(200)
                 .json({ message: 'Operação bem sucedida!', data: pacientes });
@@ -27,15 +19,7 @@ export default class PacientesController {
     static async findPaciente(request, response) {
         const { id } = request.params;
         try {
-            const pacienteBuscado = await PacienteRepository.findByPk(
-                id
-                // {
-                //     include: "news",
-                //     attributes: {
-                //         exclude: ["password"],
-                //     },
-                // }
-            );
+            const pacienteBuscado = await PacienteRepository.findByPk(id);
             if (pacienteBuscado === null) {
                 response.status(404).json({
                     message: `Paciente com ID - ${id} não encontrado `,
@@ -69,14 +53,7 @@ export default class PacientesController {
                         arrayIdade[1] - 1,
                         arrayIdade[0]
                     ),
-                }
-                // {
-                //     include: "news",
-                //     attributes: {
-                //         exclude: ["password"],
-                //     },
-                // }
-            );
+                });
             response.status(201).json({
                 message: 'Operação bem sucedida!',
                 data: pacienteCreated,
@@ -129,15 +106,7 @@ export default class PacientesController {
             });
             console.log('aqui ' + updateOk);
             if (updateOk == 1) {
-                const pacienteUpdated = await PacienteRepository.findByPk(
-                    id
-                    // {
-                    //     include: "news",
-                    //     attributes: {
-                    //         exclude: ["password"],
-                    //     },
-                    // }
-                );
+                const pacienteUpdated = await PacienteRepository.findByPk(id);
                 response.status(200).json({
                     message: 'Operação bem sucedida!',
                     data: pacienteUpdated,
