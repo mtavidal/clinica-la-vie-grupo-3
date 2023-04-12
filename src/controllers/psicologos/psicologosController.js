@@ -12,7 +12,10 @@ export default class PsicologosController {
             });
             return response.status(200).json(allPsicologos);
         } catch (error) {
-            return response.status(500).json(error.message);
+            console.log('Erro ao recuperar os registros de pacientes: ', error);
+            return response
+                .status(500)
+                .json({ message: 'Falha na operação', data: [] });
         }
     }
 
@@ -36,7 +39,13 @@ export default class PsicologosController {
 
             return response.status(200).json(onePsicologo);
         } catch (error) {
-            return response.status(500).json(error.message);
+            console.log(
+                `Erro ao recuperar o registro de paciente com id ${id}: `,
+                error
+            );
+            return response
+                .status(500)
+                .json({ message: 'Falha na operação', data: {} });
         }
     }
 
@@ -53,23 +62,25 @@ export default class PsicologosController {
 
             return response.status(201).json(createPsicologo);
         } catch (error) {
+            console.log('Erro ao criar paciente: ', error);
+
             if (error instanceof UniqueConstraintError) {
                 return response.status(400).json({
-                    message: error.errors.map((e) => e.message),
+                    message: 'Falha na operação',
+                    data: error.errors.map((e) => e.message),
                 });
-            }
-
-            if (error.name === 'UnauthorizedError') {
-                console.log('a');
             }
 
             if (error.name === 'SequelizeValidationError') {
                 return response.status(400).json({
-                    message: error.errors.map((e) => e.message),
+                    message: 'Falha na operação',
+                    data: error.errors.map((e) => e.message),
                 });
             }
 
-            return response.status(500).json(error.message);
+            return response
+                .status(500)
+                .json({ message: 'Falha na operação', data: {} });
         }
     }
 
@@ -106,19 +117,28 @@ export default class PsicologosController {
 
             return response.status(200).json(psicologoUpdated);
         } catch (error) {
+            console.log(
+                `Erro ao atualizar o registro do paciente com id ${id}: `,
+                error
+            );
+
             if (error instanceof UniqueConstraintError) {
                 return response.status(400).json({
-                    message: error.errors.map((e) => e.message),
+                    message: 'Falha na operação',
+                    data: error.errors.map((e) => e.message),
                 });
             }
 
             if (error.name === 'SequelizeValidationError') {
                 return response.status(400).json({
-                    message: error.errors.map((e) => e.message),
+                    message: 'Falha na operação',
+                    data: error.errors.map((e) => e.message),
                 });
             }
 
-            return response.status(500).json(error.message);
+            return response
+                .status(500)
+                .json({ message: 'Falha na operação', data: {} });
         }
     }
 
@@ -139,7 +159,13 @@ export default class PsicologosController {
                 message: `Psicólogo com id: ${id} excluída com sucesso.`,
             });
         } catch (error) {
-            return response.status(500).json(error.message);
+            console.log(
+                `Erro ao tentar excluir o registro de paciente com id ${id}: `,
+                error
+            );
+            return response
+                .status(500)
+                .json({ message: 'Falha na operação', data: [] });
         }
     }
 }

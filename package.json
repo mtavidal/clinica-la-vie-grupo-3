@@ -29,7 +29,6 @@
   "homepage": "https://github.com/rodrigobruno/clinica-la-vie-grupo-3#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-jwt": "^8.4.1",

@@ -1,9 +1,7 @@
 import { default as PsicologoRepository } from '../../models/psicologos/psicologosModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
-dotenv.config();
 const jwtsecret = process.env.JWT_SECRET;
 
 export default class AuthController {
@@ -15,18 +13,6 @@ export default class AuthController {
                     email,
                 },
             });
-
-            if (!user)
-                return response.status(404).json({
-                    message: 'Falha na operação',
-                    data: 'Usuário não encontrado',
-                });
-
-            if (!senha)
-                return response.status(400).json({
-                    message: 'Falha na operação',
-                    data: `É necessario preencher a senha`,
-                });
 
             const passwordIsValid = bcrypt.compareSync(senha, user.senha);
 

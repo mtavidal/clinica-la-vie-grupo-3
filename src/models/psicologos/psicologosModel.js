@@ -49,7 +49,7 @@ const psicologo = db.define(
                 },
                 isEmail: {
                     args: true,
-                    msg: 'Dados do tipo e-mail inválidos',
+                    msg: 'E-mail com formato inválido',
                 },
             },
         },

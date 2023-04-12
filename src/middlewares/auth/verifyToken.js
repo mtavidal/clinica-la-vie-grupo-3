@@ -1,11 +1,9 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const jwtsecret = process.env.JWT_SECRET;
 
 export default function verifyToken(request, response, next) {
-    const token = request.headers['authorization'].split(' ')[1];
+    const token = request.headers['authorization'];
 
     if (!token) {
         return response.status(403).json({
@@ -14,7 +12,7 @@ export default function verifyToken(request, response, next) {
         });
     }
 
-    jwt.verify(token, jwtsecret, function (error, decoded) {
+    jwt.verify(token.split(' ')[1], jwtsecret, function (error, decoded) {
         if (error) {
             return response.status(401).json({
                 message: 'Falha na operação',
@@ -26,10 +24,3 @@ export default function verifyToken(request, response, next) {
         next();
     });
 }
-
-// const auth = jwt({
-//     secret: process.env.JWT_SECRET,
-//     algorithms: ['HS256'],
-// });
-
-//export default auth;
