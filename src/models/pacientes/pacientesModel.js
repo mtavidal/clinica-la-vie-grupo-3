@@ -48,7 +48,7 @@ const paciente = db.define(
                 },
             },
         },
-        idade: {
+        data_nascimento: {
             type: Sequelize.DATEONLY,
             allowNull: false,
             validate: {
@@ -66,7 +66,7 @@ const paciente = db.define(
                 },
             },
             get: function () {
-                return moment(this.getDataValue('idade')).format('DD/MM/YYYY');
+                return moment(this.getDataValue('data_nascimento')).format('DD/MM/YYYY');
             },
         },
     },
