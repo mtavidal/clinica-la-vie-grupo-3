@@ -10,6 +10,8 @@ Para ajudar nos atendimentos, eles precisam de uma API que permita criar registr
 
 Usamos o notion para gerenciar o projeto. Centralizando todas as informações necessárias e utilizando Kanban para andamento das tarefas.
 
+[Acessar notion](https://rodrigobruno.notion.site/Desafio-3-5fa253a022cf4c09aa26d07f89925a2b)
+
 ---
 
 ## 📁 Executar o projeto
