@@ -49,11 +49,11 @@ export default class DashboardController {
     }
 
     static async findMediaAtendimento(request, response) {
-        //GET /media-de-atendimentos-por-psicologos
         try {
-            const totalPsicologos = 10//await PsicologoRepository.count();
-            const totalAtentimentos = 5 //await AtendimentoRepository.count();
-            const media = totalAtentimentos/totalPsicologos;
+            const totalPsicologos = await PsicologoRepository.count();
+            const totalAtentimentos = await AtendimentoRepository.count();
+            let media = totalAtentimentos/totalPsicologos;
+            media = media || 0;
             response
                 .status(200)
                 .json({ message: "Operação bem sucedida!", media_Atendimentos_Por_Psicologos: media.toFixed(1) });

@@ -7,17 +7,9 @@ import pacientesValidations from '../../middlewares/validations/pacientes/pacien
 const routes = express.Router();
 
 routes.get('/', PacientesController.findAllPacientes);
-routes.get('/:id', PacientesController.findPaciente);
-routes.post(
-    '/', 
-    pacientesValidations,
-    verifyToken, 
-    PacientesController.addPaciente);
-routes.put(
-    '/:id', 
-    pacientesValidations,
-    verifyToken, 
-    PacientesController.uptadePaciente);
+routes.get('/:id', verifyToken, PacientesController.findPaciente);
+routes.post('/', pacientesValidations, PacientesController.addPaciente);
+routes.put('/:id', pacientesValidations, verifyToken, PacientesController.uptadePaciente);
 routes.delete('/:id', verifyToken, PacientesController.deletePaciente);
 
 export default routes;
