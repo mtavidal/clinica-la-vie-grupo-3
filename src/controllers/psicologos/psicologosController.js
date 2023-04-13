@@ -9,9 +9,15 @@ export default class PsicologosController {
                     exclude: ['senha'],
                 },
             });
-            return response.status(200).json(allPsicologos);
+            return response.status(200).json({
+                message: 'Operação bem sucedida!',
+                data: allPsicologos,
+            });
         } catch (error) {
-            console.log('Erro ao recuperar os registros de pacientes: ', error);
+            console.log(
+                'Erro ao recuperar os registros de psicologos: ',
+                error
+            );
             return response
                 .status(500)
                 .json({ message: 'Falha na operação', data: [] });
@@ -22,19 +28,29 @@ export default class PsicologosController {
         const { id } = request.params;
 
         try {
-            const onePsicologo = await PsicologoRepository.findByPk(
-                Number(id),
-                {
-                    attributes: {
-                        exclude: ['senha'],
-                    },
-                }
-            );
-
-            return response.status(200).json(onePsicologo);
+            const authId = request.id;
+            if (Number(authId) === Number(id)) {
+                const onePsicologo = await PsicologoRepository.findByPk(
+                    Number(id),
+                    {
+                        attributes: {
+                            exclude: ['senha'],
+                        },
+                    }
+                );
+                return response.status(200).json({
+                    message: 'Operação bem sucedida!',
+                    data: onePsicologo,
+                });
+            } else {
+                return response.status(403).json({
+                    message: 'Falha na operação',
+                    data: 'Não tem direitos visualizar o conteúdo',
+                });
+            }
         } catch (error) {
             console.log(
-                `Erro ao recuperar o registro de paciente com id ${id}: `,
+                `Erro ao recuperar o registro de psicologo com id ${id}: `,
                 error
             );
             return response
@@ -47,6 +63,17 @@ export default class PsicologosController {
         const { nome, email, senha, apresentacao } = request.body;
 
         try {
+            const uniquePsicologo = await PsicologoRepository.findOne({
+                where: { email: email },
+            });
+
+            if (uniquePsicologo) {
+                return response.status(400).json({
+                    message: 'Falha na operação',
+                    data: 'O e-mail já está cadastrado',
+                });
+            }
+
             const createPsicologo = await PsicologoRepository.create({
                 nome: nome,
                 email: email,
@@ -54,9 +81,12 @@ export default class PsicologosController {
                 apresentacao: apresentacao,
             });
 
-            return response.status(201).json(createPsicologo);
+            return response.status(201).json({
+                message: 'Operação bem sucedida!',
+                data: createPsicologo,
+            });
         } catch (error) {
-            console.log('Erro ao criar paciente: ', error);
+            console.log('Erro ao criar psicólogo: ', error);
 
             return response
                 .status(500)
@@ -69,34 +99,115 @@ export default class PsicologosController {
         const { nome, email, senha, apresentacao } = request.body;
 
         try {
-            await PsicologoRepository.update(
-                {
-                    nome: nome,
-                    email: email,
-                    senha: senha === undefined ? '' : bcrypt.hashSync(senha, 8),
-                    apresentacao: apresentacao,
-                },
-                {
-                    where: { id: Number(id) },
-                }
-            );
+            const authId = request.id;
 
-            const psicologoUpdated = await PsicologoRepository.findByPk(
-                Number(id),
-                {
-                    attributes: {
-                        exclude: ['senha'],
+            if (Number(authId) === Number(id)) {
+                const uniquePsicologo = await PsicologoRepository.findOne({
+                    where: { email: email },
+                });
+
+                if (uniquePsicologo && id != uniquePsicologo.id) {
+                    return response.status(400).json({
+                        message: 'Falha na operação',
+                        data: 'O e-mail já está cadastrado',
+                    });
+                }
+
+                await PsicologoRepository.update(
+                    {
+                        nome: nome,
+                        email: email,
+                        senha: bcrypt.hashSync(senha, 8),
+                        apresentacao: apresentacao,
                     },
-                }
+                    {
+                        where: { id: Number(id) },
+                    }
+                );
+                const psicologoUpdated = await PsicologoRepository.findByPk(
+                    id,
+                    {
+                        attributes: {
+                            exclude: ['senha'],
+                        },
+                    }
+                );
+                return response.status(200).json({
+                    message: 'Operação bem sucedida!',
+                    data: psicologoUpdated,
+                });
+            } else {
+                return response.status(403).json({
+                    message: 'Falha na operação',
+                    data: 'Não tem direitos de edição do conteúdo',
+                });
+            }
+        } catch (error) {
+            console.log(
+                `Erro ao atualizar o registro do psicologo com id ${id}: `,
+                error
             );
 
-            return response.status(200).json(psicologoUpdated);
+            return response
+                .status(500)
+                .json({ message: 'Falha na operação', data: {} });
+        }
+    }
+
+    static async patchPsicologo(request, response) {
+        const { id } = request.params;
+        const bodyUpdate = request.body;
+        try {
+            if (bodyUpdate.email) {
+                const uniquePsicologo = await PsicologoRepository.findOne({
+                    where: { email: bodyUpdate.email },
+                });
+
+                if (uniquePsicologo && id != uniquePsicologo.id) {
+                    return response.status(400).json({
+                        message: 'Falha na operação',
+                        data: 'O e-mail já está cadastrado',
+                    });
+                }
+            }
+
+            if (bodyUpdate.senha) {
+                bodyUpdate.senha = bcrypt.hashSync(bodyUpdate.senha, 8);
+            }
+
+            const authId = request.id;
+
+            if (Number(authId) === Number(id)) {
+                await PsicologoRepository.update(bodyUpdate, {
+                    where: {
+                        id: id,
+                    },
+                });
+
+                const psicologoUpdated = await PsicologoRepository.findByPk(
+                    id,
+                    {
+                        attributes: {
+                            exclude: ['senha'],
+                        },
+                    }
+                );
+
+                return response.status(200).json({
+                    message: 'Operação bem sucedida!',
+                    data: psicologoUpdated,
+                });
+            } else {
+                return response.status(403).json({
+                    message: 'Falha na operação',
+                    data: 'Não tem direitos de edição do conteúdo',
+                });
+            }
         } catch (error) {
             console.log(
                 `Erro ao atualizar o registro do paciente com id ${id}: `,
                 error
             );
-
             return response
                 .status(500)
                 .json({ message: 'Falha na operação', data: {} });
@@ -107,21 +218,23 @@ export default class PsicologosController {
         const { id } = request.params;
 
         try {
-            const isDeletePsicologo = await PsicologoRepository.destroy({
-                where: { id: Number(id) },
-            });
+            const authId = request.id;
 
-            if (!isDeletePsicologo)
-                return response.status(404).json({
-                    message: `Psicólogo com id: ${id} não encontrado`,
+            if (Number(authId) === Number(id)) {
+                await PsicologoRepository.destroy({
+                    where: { id: Number(id) },
                 });
 
-            return response.status(200).json({
-                message: `Psicólogo com id: ${id} excluída com sucesso.`,
-            });
+                return response.status(200).status(204).send();
+            } else {
+                return response.status(403).json({
+                    message: 'Falha na operação',
+                    data: 'Não tem direitos de edição do conteúdo',
+                });
+            }
         } catch (error) {
             console.log(
-                `Erro ao tentar excluir o registro de paciente com id ${id}: `,
+                `Erro ao tentar excluir o registro de psicologo com id ${id}: `,
                 error
             );
             return response

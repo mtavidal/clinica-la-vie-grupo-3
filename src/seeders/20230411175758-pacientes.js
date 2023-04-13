@@ -9,7 +9,7 @@ module.exports = {
                 {
                     nome: 'João da Silva',
                     email: 'joao.silva@email.com',
-                    idade: '1985-03-15',
+                    data_nascimento: '1985-03-15',
                     createdAt: new Date()
                         .toISOString()
                         .slice(0, 19)
@@ -22,7 +22,7 @@ module.exports = {
                 {
                     nome: 'Maria dos Santos',
                     email: 'maria.santos@email.com',
-                    idade: '1990-08-21',
+                    data_nascimento: '1990-08-21',
                     createdAt: new Date()
                         .toISOString()
                         .slice(0, 19)
@@ -35,7 +35,7 @@ module.exports = {
                 {
                     nome: 'Pedro Souza',
                     email: 'pedro.souza@email.com',
-                    idade: '1978-11-07',
+                    data_nascimento: '1978-11-07',
                     createdAt: new Date()
                         .toISOString()
                         .slice(0, 19)
@@ -48,7 +48,7 @@ module.exports = {
                 {
                     nome: 'Ana Clara Pereira',
                     email: 'anaclara.pereira@email.com',
-                    idade: '2001-02-28',
+                    data_nascimento: '2001-02-28',
                     createdAt: new Date()
                         .toISOString()
                         .slice(0, 19)
@@ -61,7 +61,7 @@ module.exports = {
                 {
                     nome: 'Lucas Rodrigues',
                     email: 'lucas.rodrigues@email.com',
-                    idade: '1995-06-12',
+                    data_nascimento: '1995-06-12',
                     createdAt: new Date()
                         .toISOString()
                         .slice(0, 19)

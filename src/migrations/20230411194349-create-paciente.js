@@ -18,7 +18,7 @@ module.exports = {
                 type: Sequelize.STRING,
                 unique: true,
             },
-            idade: {
+            data_nascimento: {
                 allowNull: false,
                 type: Sequelize.DATEONLY,
             },

@@ -171,5 +171,3 @@ dist
 *.vsix
 
 # Custom
-seeders/*
-src/config/config.json

@@ -1,5 +1,6 @@
 import { body, param } from 'express-validator';
 import verifyBodyFieldsErros from '../bodyValidations.js';
+import verifyparmsFieldsErros from '../parmsValidations.js';
 import { Psicologos as PsicologoRepository } from '../../../models/index.js';
 
 const psicologosValidationsBody = [
@@ -30,30 +31,23 @@ const psicologosValidationsBody = [
     verifyBodyFieldsErros,
 ];
 
-const psicologosValidationsBodyPost = [
-    body('email').custom((value) => {
-        return PsicologoRepository.findOne({
-            where: { email: value },
-        }).then((user) => {
-            if (user) {
-                return Promise.reject('O e-mail já está cadastrado');
-            }
-        });
-    }),
-    verifyBodyFieldsErros,
-];
-
-const psicologosValidationsBodyPut = [
-    body('email').custom((value, { req }) => {
-        const { id } = req.params;
-        return PsicologoRepository.findOne({
-            where: { email: value },
-        }).then((user) => {
-            if (user && id != user.id) {
-                return Promise.reject('O e-mail já está cadastrado');
-            }
-        });
-    }),
+const psicologosValidationsBodyPatch = [
+    body('nome')
+        .optional()
+        .isLength({ min: 3 })
+        .withMessage('O nome deve ter mais de 3 caracteres'),
+    body('email')
+        .optional()
+        .isEmail()
+        .withMessage('E-mail com formato inválido'),
+    body('senha')
+        .optional()
+        .isLength({ min: 6 })
+        .withMessage('Senha deve ter mais de 6 caracteres'),
+    body('apresentacao')
+        .optional()
+        .isLength({ min: 20 })
+        .withMessage('Apresentação deve ter mais de 20 caracteres'),
     verifyBodyFieldsErros,
 ];
 
@@ -71,12 +65,11 @@ const psicologosValidationsParam = [
             });
         }
     }),
-    verifyBodyFieldsErros,
+    verifyparmsFieldsErros,
 ];
 
 export {
     psicologosValidationsBody,
-    psicologosValidationsBodyPost,
-    psicologosValidationsBodyPut,
+    psicologosValidationsBodyPatch,
     psicologosValidationsParam,
 };

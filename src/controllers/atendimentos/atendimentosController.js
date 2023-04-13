@@ -8,8 +8,6 @@ export default class AtendimentosController {
     static async findAllAtendimentos(request, response) {
         try {
             const allAtendimentos = await AtendimentoRepository.findAll({
-                // include: 'psicologo',
-                // include: 'paciente',
                 include: [
                     {
                         model: PsicologoRepository,
@@ -17,7 +15,7 @@ export default class AtendimentosController {
                     },
                     {
                         model: PacienteRepository,
-                        attributes: ['id', 'nome', 'email', 'idade'],
+                        attributes: ['id', 'nome', 'email', 'data_nascimento'],
                     },
                 ],
                 attributes: {

@@ -1,8 +1,7 @@
 import express from 'express';
 import {
     psicologosValidationsBody,
-    psicologosValidationsBodyPost,
-    psicologosValidationsBodyPut,
+    psicologosValidationsBodyPatch,
     psicologosValidationsParam,
 } from '../../middlewares/validations/psicologos/psicologosValidations.js';
 import PsicologosController from '../../controllers/psicologos/psicologosController.js';
@@ -13,21 +12,24 @@ const routes = express.Router();
 routes.get('/', PsicologosController.findAllPsicologos);
 routes.get(
     '/:id',
+    verifyToken,
     psicologosValidationsParam,
     PsicologosController.findPsicologo
 );
-routes.post(
-    '/',
-    psicologosValidationsBody,
-    psicologosValidationsBodyPost,
-    PsicologosController.addPsicologo
-);
+routes.post('/', psicologosValidationsBody, PsicologosController.addPsicologo);
 routes.put(
     '/:id',
     verifyToken,
     psicologosValidationsBody,
-    psicologosValidationsBodyPut,
+    psicologosValidationsParam,
     PsicologosController.updatePsicologo
+);
+routes.patch(
+    '/:id',
+    verifyToken,
+    psicologosValidationsBodyPatch,
+    psicologosValidationsParam,
+    PsicologosController.patchPsicologo
 );
 routes.delete(
     '/:id',
