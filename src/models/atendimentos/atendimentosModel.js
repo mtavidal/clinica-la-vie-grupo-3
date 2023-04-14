@@ -24,18 +24,10 @@ const atendimento = db.define(
                     args: true,
                     msg: 'Dados do tipo data inválidos. Ex.: 2038-01-19 03:14:07',
                 },
-                isAfter: {
-                    args: new Intl.DateTimeFormat('pt-BR', {
-                        timeZone: 'America/Sao_Paulo',
-                        dateStyle: 'short',
-                        hour12: false,
-                        timeStyle: 'medium',
-                    })
-                        .format(new Date(Date.now()))
-                        .split(',')
-                        .join(''),
-                    msg: 'Data tem que ser posterior agora',
-                },
+                // isAfter: {
+                //     args: new Date().toISOString(),
+                //     msg: 'Data tem que ser posterior agora',
+                // },
             },
         },
         observacao: {
@@ -47,8 +39,8 @@ const atendimento = db.define(
                     msg: 'Obrigatório',
                 },
                 min: {
-                    args: [20],
-                    msg: 'A observação deve ter mais de 20 caracteres',
+                    args: [10],
+                    msg: 'A observação deve ter no mínimo 10 caracteres',
                 },
             },
         },
