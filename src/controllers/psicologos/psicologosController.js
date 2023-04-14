@@ -155,7 +155,7 @@ export default class PsicologosController {
             } else {
                 return response.status(403).json({
                     message: 'Falha na operação',
-                    data: 'Usuário sem direito de edição desse conteúdo.',
+                    data: 'Usuário sem direito de edição desse psicologo.',
                 });
             }
         } catch (error) {
@@ -223,7 +223,7 @@ export default class PsicologosController {
             } else {
                 return response.status(403).json({
                     message: 'Falha na operação',
-                    data: 'Usuário sem direito de edição desse conteúdo.',
+                    data: 'Usuário sem direito de edição desse psicologo.',
                 });
             }
         } catch (error) {
@@ -252,7 +252,7 @@ export default class PsicologosController {
             } else {
                 return response.status(403).json({
                     message: 'Falha na operação',
-                    data: 'Usuário sem direito de exclusão desse conteúdo.',
+                    data: 'Usuário sem permissão de exclusão desse psicologo.',
                 });
             }
         } catch (error) {
