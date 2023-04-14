@@ -1,7 +1,6 @@
 import { body, param } from 'express-validator';
 import verifyBodyFieldsErros from '../bodyValidations.js';
 import verifyparmsFieldsErros from '../parmsValidations.js';
-import { Psicologos as PsicologoRepository } from '../../../models/index.js';
 
 const psicologosValidationsBody = [
     body('nome')
@@ -52,19 +51,7 @@ const psicologosValidationsBodyPatch = [
 ];
 
 const psicologosValidationsParam = [
-    param('id').custom((value) => {
-        if (isNaN(value)) {
-            return Promise.reject(`Preencha um ID valido`);
-        } else {
-            return PsicologoRepository.findByPk(Number(value)).then((user) => {
-                if (user == null) {
-                    return Promise.reject(
-                        `Psicólogo com id: ${value} não encontrado`
-                    );
-                }
-            });
-        }
-    }),
+    param('id').isNumeric().withMessage('Preencha um ID valido'),
     verifyparmsFieldsErros,
 ];
 
