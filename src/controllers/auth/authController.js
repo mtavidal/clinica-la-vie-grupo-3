@@ -17,7 +17,7 @@ export default class AuthController {
             if (!user) {
                 return response.status(401).json({
                     message: 'Falha na operação',
-                    data: 'Usuário não autorizado',
+                    data: 'E-mail ou senha inválido, verifique e tente novamente',
                 });
             }
 
@@ -26,7 +26,7 @@ export default class AuthController {
             if (!passwordIsValid) {
                 return response.status(401).json({
                     message: 'Falha na operação',
-                    data: 'Usuário não autorizado',
+                    data: 'E-mail ou senha inválido, verifique e tente novamente',
                 });
             }
 
