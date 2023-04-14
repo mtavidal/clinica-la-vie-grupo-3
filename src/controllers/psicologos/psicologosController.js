@@ -54,7 +54,7 @@ export default class PsicologosController {
             } else {
                 return response.status(403).json({
                     message: 'Falha na operação',
-                    data: 'Usuário sem acesso a esse conteúdo.',
+                    data: 'Usuário sem acesso a esse psicologo.',
                 });
             }
         } catch (error) {
