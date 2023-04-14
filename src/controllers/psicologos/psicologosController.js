@@ -244,11 +244,7 @@ export default class PsicologosController {
             const authId = request.id;
 
             if (Number(authId) === Number(id)) {
-                await PsicologoRepository.destroy({
-                    where: { id: Number(id) },
-                });
-
-                return response.status(200).status(204).send();
+                return response.status(204).send();
             } else {
                 return response.status(403).json({
                     message: 'Falha na operação',
