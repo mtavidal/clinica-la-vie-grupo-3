@@ -22,7 +22,8 @@ export default class PacientesController {
             const pacienteBuscado = await PacienteRepository.findByPk(id);
             if (pacienteBuscado === null) {
                 return response.status(404).json({
-                    message: `Paciente com ID - ${id} não encontrado.`,
+                    message: 'Falha na operação',
+                    data: `Paciente com ID - ${id} não encontrado.`,
                 });
             } else {
                 return response.status(200).json({
@@ -111,7 +112,8 @@ export default class PacientesController {
                 });
             } else {
                 return response.status(404).json({
-                    message: `Paciente com ID - ${id} não encontrado.`,
+                    message: 'Falha na operação',
+                    data: `Paciente com ID - ${id} não encontrado.`,
                 });
             }
         } catch (error) {
@@ -150,7 +152,8 @@ export default class PacientesController {
                 return response.status(204).send();
             } else {
                 return response.status(404).json({
-                    message: `Paciente com ID - ${id} não encontrado.`,
+                    message: 'Falha na operação',
+                    data: `Paciente com ID - ${id} não encontrado.`,
                 });
             }
         } catch (error) {
