@@ -16,15 +16,50 @@ Usamos o notion para gerenciar o projeto. Centralizando todas as informações n
 
 ## 📁 Executar o projeto
 
--   Renomei o arquivo na raiz do projeto `.env.example` para `.env`;
--   Preenchas informações do arquivo `.env`;
--   Rode o comando no terminal
+### Caso deseje criar o banco manualmente:
+
+1.  Crie um novo banco de dados;
+2.  Renomei o arquivo na raiz do projeto `.env.example` para `.env`;
+3.  Preenchas as informações do arquivo `.env`;
+4.  No terminal use o comando abaixo para instalar as dependências:
+
+```
+npm install
+```
+
+5.  No terminal use o comando abaixo para iniciar o projeto:
 
 ```
 npm start
 ```
 
----
+### Caso deseje que a aplicação crie o banco e já preencha as tabelas com alguns valores:
+
+1.  Renomei o arquivo na raiz do projeto `.env.example` para `.env`;
+2.  Preenchas as informações do arquivo `.env`;
+3.  No terminal use o comando abaixo para instalar as dependências:
+
+```
+npm install
+```
+
+4.  No terminal use o comando abaixo para iniciar o projeto:
+
+```
+npm run dev
+```
+
+5.  Nas próximas vezes para iniciar o projeto use o comando:
+
+```
+npm start
+```
+
+Caso deseje o comando faz com projeto rode com node --watch
+
+```
+npm run dev
+```
 
 ## 💻 Tecnologias utilizadas
 
