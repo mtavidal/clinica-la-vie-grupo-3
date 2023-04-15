@@ -46,7 +46,7 @@ npm install
 4.  No terminal use o comando abaixo para iniciar o projeto:
 
 ```
-npm run dev
+npm run db
 ```
 
 5.  Nas próximas vezes para iniciar o projeto use o comando:
@@ -55,7 +55,7 @@ npm run dev
 npm start
 ```
 
-Caso deseje o comando faz com projeto rode com node --watch
+Caso deseje o comando abaixo faz com que o projeto use o --watch:
 
 ```
 npm run dev
