@@ -4,10 +4,6 @@ Um grupo de psicólogos se juntaram e criaram a clínica La Vie - Saúde Mental 
 
 Para ajudar nos atendimentos, eles precisam de uma API que permita criar registros de psicólogos, pacientes e prontuários. Em uma conversa com os Front-end e os PO foram decididos alguns grupos de endpoints que devem ser criados.
 
-O processo de criação da API de atendimentos de psicólogos e pacientes foi realizado utilizando node, express, jwt e bcrypt. criamos modelos para as entidades. Implementamos os controladores para gerenciar as solicitações, configuramos as rotas para receber e responder a solicitações HTTP, middleware para adicionar funcionalidades extras, implementamos as autenticação com JWT e Bcrypt para encriptar as senhas.
-
-Para gerenciar o projeto, utilizamos um quadro kanban no Notion para centralizar as tarefas e manter o acompanhamento do desenvolvimento. O código foi versionado no GitHub, o que permitiu a colaboração entre os membros da equipe e a fácil implementação de novas funcionalidades. Ao final do processo, tivemos uma API, que permite agendar e gerenciar atendimentos dos psicólogos e pacientes.
-
 ---
 
 ## 🧑‍💼 Gerenciamento do projeto
@@ -50,7 +46,7 @@ npm install
 4.  No terminal use o comando abaixo para iniciar o projeto:
 
 ```
-npm run dev
+npm run db
 ```
 
 5.  Nas próximas vezes para iniciar o projeto use o comando:
@@ -59,7 +55,7 @@ npm run dev
 npm start
 ```
 
-Caso deseje o comando faz com projeto rode com node --watch
+Caso deseje o comando abaixo faz com que o projeto use o --watch
 
 ```
 npm run dev
@@ -84,9 +80,9 @@ npm run dev
 
 ## 📑 Documentação
 
--   [Ver a documentação](https://documenter.getpostman.com/view/7321693/2s93Xx1jaY)
+[Ver a documentação](https://documenter.getpostman.com/view/7321693/2s93XwyiTr)
 
-[![Executar no Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7321693-f4e9ed1c-90f1-4b5f-b454-1f41a7c293fa?action=collection%2Ffork&collection-url=entityId%3D7321693-f4e9ed1c-90f1-4b5f-b454-1f41a7c293fa%26entityType%3Dcollection%26workspaceId%3Da5be3193-335d-46ce-a870-0210c3ee5cfe)
+[![Executar no Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7321693-cb8c9726-3357-454a-bd5c-05dfabd38417?action=collection%2Ffork&collection-url=entityId%3D7321693-cb8c9726-3357-454a-bd5c-05dfabd38417%26entityType%3Dcollection%26workspaceId%3D9de4cab0-21c3-4694-8bdd-e668f6651cd7)
 
 ---
 

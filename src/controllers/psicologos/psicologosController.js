@@ -109,18 +109,17 @@ export default class PsicologosController {
 
         try {
             const authId = request.id;
+            const isIdPsicologoExist = await PsicologoRepository.findByPk(id);
 
-            if (Number(authId) === Number(id)) {
+            if (!isIdPsicologoExist) {
+                return response.status(404).json({
+                    message: 'Falha na operação',
+                    data: `Psicologo com ID - ${id} não encontrado.`,
+                });
+            } else if (Number(authId) === Number(id)) {
                 const uniquePsicologo = await PsicologoRepository.findOne({
                     where: { email: email },
                 });
-
-                if (uniquePsicologo === null) {
-                    return response.status(404).json({
-                        message: 'Falha na operação',
-                        data: `Psicologo com ID - ${id} não encontrado.`,
-                    });
-                }
 
                 if (uniquePsicologo && id != uniquePsicologo.id) {
                     return response.status(400).json({
@@ -174,6 +173,15 @@ export default class PsicologosController {
         const { id } = request.params;
         const bodyUpdate = request.body;
         try {
+            const isIdPsicologoExist = await PsicologoRepository.findByPk(id);
+
+            if (!isIdPsicologoExist) {
+                return response.status(404).json({
+                    message: 'Falha na operação',
+                    data: `Psicologo com ID - ${id} não encontrado.`,
+                });
+            }
+
             if (bodyUpdate.email) {
                 const uniquePsicologo = await PsicologoRepository.findOne({
                     where: { email: bodyUpdate.email },
@@ -244,7 +252,19 @@ export default class PsicologosController {
             const authId = request.id;
 
             if (Number(authId) === Number(id)) {
-                return response.status(204).send();
+                const deleteOk = await PsicologoRepository.destroy({
+                    where: {
+                        id: id,
+                    },
+                });
+                if (deleteOk == 1) {
+                    return response.status(204).send();
+                } else {
+                    return response.status(404).json({
+                        message: 'Falha na operação',
+                        data: `Psicologo com ID - ${id} não encontrado.`,
+                    });
+                }
             } else {
                 return response.status(403).json({
                     message: 'Falha na operação',
