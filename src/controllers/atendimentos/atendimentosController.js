@@ -69,6 +69,15 @@ export default class AtendimentosController {
                     message: 'Falha na operação',
                     data: `Atendimento com ID - ${id} não encontrado.`,
                 });
+            }
+
+            const authId = request.id;
+
+            if (Number(authId) != Number(atendimentoBuscado.psicologo.id)) {
+                return response.status(403).json({
+                    message: 'Falha na operação',
+                    data: `Usuário sem permissão para visualização do atendimento de id - ${id} .`,
+                });
             } else {
                 return response.status(200).json({
                     message: 'Operação bem sucedida!',
