@@ -80,9 +80,9 @@ npm run dev
 
 ## 📑 Documentação
 
-[Ver a documentação](https://documenter.getpostman.com/view/7321693/2s93XwyiTr)
+[Ver a documentação](https://documenter.getpostman.com/view/7321693/2s93Xx1jaY)
 
-[![Executar no Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7321693-cb8c9726-3357-454a-bd5c-05dfabd38417?action=collection%2Ffork&collection-url=entityId%3D7321693-cb8c9726-3357-454a-bd5c-05dfabd38417%26entityType%3Dcollection%26workspaceId%3D9de4cab0-21c3-4694-8bdd-e668f6651cd7)
+[![Executar no Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7321693-f4e9ed1c-90f1-4b5f-b454-1f41a7c293fa?action=collection%2Ffork&collection-url=entityId%3D7321693-f4e9ed1c-90f1-4b5f-b454-1f41a7c293fa%26entityType%3Dcollection%26workspaceId%3Da5be3193-335d-46ce-a870-0210c3ee5cfe)
 
 ---
 
