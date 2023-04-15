@@ -55,7 +55,7 @@ npm run db
 npm start
 ```
 
-Caso deseje o comando abaixo faz com que o projeto use o --watch
+Caso deseje o comando abaixo faz com que o projeto use o --watch:
 
 ```
 npm run dev
