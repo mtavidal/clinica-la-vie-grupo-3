@@ -91,6 +91,6 @@ npm run dev
 Grupo 3
 
 -   [Francisco Oliveira](https://github.com/)
--   [Manuela Torres](https://github.com/)
+-   [Manuela Torres](https://github.com/mtavidal)
 -   [Marjorie Caroline Tristão Ferreira](https://github.com/)
 -   [Rodrigo Bruno](https://github.com/rodrigobruno/)
